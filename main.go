@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -37,7 +38,9 @@ func mains() error {
 	history := simplehistory.New()
 
 	editor := &readline.Editor{
-		Prompt:   func() (int, error) { return fmt.Print("$ ") },
+		PromptWriter: func(w io.Writer) (int, error) {
+			return io.WriteString(w, "\x1B[0;1;32m$ \x1B[0m")
+		},
 		Writer:   colorable.NewColorableStdout(),
 		History:  history,
 		Coloring: &coloring.VimBatch{},
