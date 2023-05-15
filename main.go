@@ -9,6 +9,8 @@ import (
 
 	"github.com/nyaosorg/go-readline-ny"
 	"github.com/nyaosorg/go-readline-ny/coloring"
+	"github.com/nyaosorg/go-readline-ny/completion"
+	"github.com/nyaosorg/go-readline-ny/keys"
 	"github.com/nyaosorg/go-readline-ny/simplehistory"
 	"github.com/zetamatta/go-shellcommand"
 )
@@ -16,12 +18,15 @@ import (
 func mains() error {
 	history := simplehistory.New()
 
-	editor := readline.Editor{
+	editor := &readline.Editor{
 		Prompt:   func() (int, error) { return fmt.Print("$ ") },
 		Writer:   colorable.NewColorableStdout(),
 		History:  history,
 		Coloring: &coloring.VimBatch{},
 	}
+	editor.BindKey(keys.CtrlI, &completion.CmdCompletionOrList{
+		Completion: completion.File{},
+	})
 	for {
 		text, err := editor.ReadLine(context.Background())
 		if err != nil {
