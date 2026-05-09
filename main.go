@@ -15,7 +15,8 @@ import (
 	"github.com/nyaosorg/go-readline-ny/completion"
 	"github.com/nyaosorg/go-readline-ny/keys"
 	"github.com/nyaosorg/go-readline-ny/simplehistory"
-	"github.com/zetamatta/go-shellcommand"
+
+	"github.com/hymkor/go-shellcommand"
 )
 
 const spaces = "\t\n\v\f\r "

@@ -1,11 +1,11 @@
-module github.com/zetamatta/ucmdsh
+module github.com/hymkor/ucmdsh
 
 go 1.17
 
 require (
+	github.com/hymkor/go-shellcommand v0.0.2
 	github.com/mattn/go-colorable v0.1.14
 	github.com/nyaosorg/go-readline-ny v1.15.1
-	github.com/zetamatta/go-shellcommand v0.0.0-20211017081916-80b8a7f0ab4c
 )
 
 require (
