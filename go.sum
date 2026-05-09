@@ -1,5 +1,7 @@
 github.com/clipperhouse/uax29/v2 v2.6.0 h1:z0cDbUV+aPASdFb2/ndFnS9ts/WNXgTNNGFoKXuhpos=
 github.com/clipperhouse/uax29/v2 v2.6.0/go.mod h1:Wn1g7MK6OoeDT0vL+Q0SQLDz/KpfsVRgg6W7ihQeh4g=
+github.com/hymkor/go-multiline-ny v0.23.1 h1:IULtIWsQHhGVxy7ferWNtRav9FZFX19K46GSdC2R2z4=
+github.com/hymkor/go-multiline-ny v0.23.1/go.mod h1:uwuSgo/xlV0UODTd88wNlllw+fjb+P8dlHvh7dlMqT4=
 github.com/hymkor/go-shellcommand v0.0.2 h1:6+XG2h/9DGk5i3Oh4rU48z/nsPWx4Sp73s6OpryQtyw=
 github.com/hymkor/go-shellcommand v0.0.2/go.mod h1:fZAUgV71RYfFRqqFvJRq/pA0v4RlCCHc2r/WBIPY8sQ=
 github.com/mattn/go-colorable v0.1.14 h1:9A9LHSqF/7dyVVX6g0U9cwm9pG3kP9gSzcuIPHPsaIE=

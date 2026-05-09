@@ -11,10 +11,11 @@ import (
 	"github.com/mattn/go-colorable"
 
 	"github.com/nyaosorg/go-readline-ny"
-	"github.com/nyaosorg/go-readline-ny/coloring"
 	"github.com/nyaosorg/go-readline-ny/completion"
 	"github.com/nyaosorg/go-readline-ny/keys"
 	"github.com/nyaosorg/go-readline-ny/simplehistory"
+
+	"github.com/hymkor/go-multiline-ny"
 
 	"github.com/hymkor/go-shellcommand"
 )
@@ -36,27 +37,54 @@ func cutField(source string) (first, rest string) {
 }
 
 func mains() error {
+	var editor multiline.Editor
 	history := simplehistory.New()
 
-	editor := &readline.Editor{
-		PromptWriter: func(w io.Writer) (int, error) {
-			return io.WriteString(w, "\x1B[0;1;32m$ \x1B[0m")
-		},
-		Writer:   colorable.NewColorableStdout(),
-		History:  history,
-		Coloring: &coloring.VimBatch{},
-	}
+	editor.SetWriter(colorable.NewColorableStdout())
+	editor.SetHistory(history)
+	editor.SetPrompt(func(w io.Writer, lnum int) (int, error) {
+		if lnum > 0 {
+			return fmt.Fprintf(w, "\x1B[0;1;32m%d> \x1B[0m", lnum)
+		}
+		return io.WriteString(w, "\x1B[0;1;32m$ \x1B[0m")
+	},
+	)
 	editor.BindKey(keys.CtrlI, &completion.CmdCompletionOrList{
 		Completion: completion.File{},
 	})
+	editor.SubmitOnEnterWhen(func(lines []string, _ int) bool {
+		quote := false
+		cont := false
+		for _, line := range lines {
+			backslash := false
+			for _, c := range line {
+				if !backslash {
+					if c == '\\' {
+						backslash = true
+					} else {
+						backslash = false
+						if c == '"' {
+							quote = !quote
+						}
+					}
+				} else {
+					backslash = false
+				}
+			}
+			cont = backslash
+		}
+		return !cont && !quote
+	})
 	for {
-		text, err := editor.ReadLine(context.Background())
+		lines, err := editor.Read(context.Background())
 		if err != nil {
 			if err == readline.CtrlC {
 				continue
 			}
 			return err
 		}
+		text4history := strings.Join(lines, "\n")
+		text := strings.ReplaceAll(text4history, "\\\n", "")
 		cmd, arg := cutField(text)
 		cmd = filepath.FromSlash(cmd)
 		text = cmd + arg
@@ -67,7 +95,7 @@ func mains() error {
 		}
 		process.Wait()
 
-		history.Add(text)
+		history.Add(text4history)
 	}
 }
 
