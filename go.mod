@@ -1,6 +1,6 @@
 module github.com/hymkor/ucmdsh
 
-go 1.17
+go 1.20
 
 require (
 	github.com/hymkor/go-shellcommand v0.0.2
@@ -14,7 +14,7 @@ require (
 	github.com/mattn/go-runewidth v0.0.23 // indirect
 	github.com/mattn/go-tty v0.0.7 // indirect
 	github.com/nyaosorg/go-box/v3 v3.1.1 // indirect
-	github.com/nyaosorg/go-ttyadapter v0.6.2 // indirect
+	github.com/nyaosorg/go-ttyadapter v0.6.3 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/term v0.25.0 // indirect
 )
